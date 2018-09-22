@@ -31,15 +31,21 @@ int main(){
       char* buffer = new char[length];
       
       stream.read(buffer, length);
-      int tagL = strcspn(buffer, "<");
-      //      cout << length << "\n";
-      //      cout << buffer << "\n";
-      char* lines = new char[stream.gcount()];
-      for(int i=0;!stream.eof() && i<=stream.gcount();i++){
-      int tagR = strcspn(buffer, ">");
+      while(!stream.eof()){
+	char* lines = new char[stream.gcount()];
+
+	int tagL = strcspn(buffer, "<");
+	//      cout << length << "\n";
+	//      cout << buffer << "\n";
+	if(tagL > 0){
+	  
+	}else{
+	  for(int i=0;!stream.eof() && i<=stream.gcount();i++){
+	    int tagR = strcspn(buffer, ">");
 	
+	  }
+	}
       }
-      
       delete[] buffer;
       
       /*
