@@ -52,12 +52,12 @@ int main(){
 
 	
 	int count;
-	char rcv_message[DOCLEN];
-	count = recv(mysocket2, rcv_message, sizeof(rcv_message), 0);
+	char snd_message[DOCLEN];
+	count = recv(mysocket2, snd_message, sizeof(snd_message), 0);
 	if(count == -1){
 	  printf("recv() call failed.");
 	}else
-	  std::cout << rcv_message << "\n";
+	  std::cout << snd_message << "\n";
 	
       
 	//CLIENT SECTION
@@ -74,33 +74,34 @@ int main(){
 
 	//strcat(rcv_message, "\r\n");
 	
-	char snd_message[DOCLEN];
-	count = send(ext_sock, rcv_message, 5, 0);
+	count = send(ext_sock, snd_message, sizeof(snd_message), 0);
 	if(count == -1){
 	  printf("send() call failed.");
 	}else{
 	  printf("message sent to server\n");
 	}
 
-	char out_message[DOCLEN];
-	count = recv(ext_sock, out_message, sizeof(out_message), 0);
+	char rcv_message[DOCLEN];
+	count = recv(ext_sock, rcv_message, sizeof(rcv_message), 0);
 	std::cout << "here\n";
 	if(count == -1){
 	  printf("Error in recv()\n");
 	}else
-	  printf("Server: %s\n", out_message);
-
-	/*
-	while(1){
-	  std::cin >> snd_message;
-	  send(sock, snd_message, sizeof(snd_message), 0);
-	
-	  if(strstr(snd_message, "Bye") != NULL) {
-	    //	  exit(0);
-	  } 
-	  }*/
+	  printf("Server: %s\n", rcv_message);	
+	}      
+	    
 	close(ext_sock);
-	//
+	
+	// END CLIENT SECTION
+	      
+	// ADD PARSING AND EDITING HERE
+	// PARSE ON rcv_message
+	      
+	count = send(socket2, rcv_message, sizeof(rcv_message), 0);
+	if(count == -1){
+	  printf("Error in final send()\n");
+	}
+	
 	close(mysocket2); 
       }
     }
